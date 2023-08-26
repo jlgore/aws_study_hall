@@ -1,5 +1,7 @@
 # EC2 Getting Started
 
+# *WORK IN PROGRESS* - some commands are not working fully yet, check with me for updates.
+
 ## Before you launch:
 
 Before you create an EC2 Instance you need a few things:
