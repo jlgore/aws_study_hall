@@ -9,6 +9,7 @@ From your Cloud9 development environment you should be able to use these AWS CLI
 * Enable Static Website Hosting `aws s3 website $BUCKET_NAME --index-document index.html --error-document error.html`
 * Put Bucket Policy on your bucket to allow Public Access: `aws s3api put-bucket-policy --bucket $BUCKET_NAME --policy file://example-policy.json`
     * Note: You must modify the Bucket Policy to include *YOUR* Bucket ARN or the policy will not work.
+    * *Stretch Goal* how can you get the bucket ARN via AWS CLI? What commands would you use?
 * Change your directory to the cafe-site directory: `cd cafe-site`
 * Put the static objects into your bucket: `aws s3 cp --recursive . s3://$BUCKET_NAME`
 * Visit your site from the Bucket Endpoint: http://bucket-name.s3-website-region.amazonaws.com (Must change the bucket name and region to the ones you are using!)
