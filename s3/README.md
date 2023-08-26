@@ -13,7 +13,9 @@ From your Cloud9 development environment you should be able to use these AWS CLI
 * Change your directory to the cafe-site directory: `cd cafe-site`
 * Put the static objects into your bucket: `aws s3 cp --recursive . s3://$BUCKET_NAME`
 * Visit your site from the Bucket Endpoint: http://bucket-name.s3-website-region.amazonaws.com (Must change the bucket name and region to the ones you are using!)
-
+* *Stretch Goal* How can you remove files from your S3 bucket via AWS CLI? 
+* Can you remove a bucket that still has files in it?
+* *REALLY BIG Stretch Goal* How can you grant another AWS Account access to update your `index.html` file only? Can you test this with a bucket policy with one of your fellow students?
 
 
 ## Example Bucket Policy:
