@@ -36,6 +36,10 @@ Virtual Private Cloud is a networking isolation in AWS. Before we can start a se
 * Create an Internet Gateway:  `aws ec2 create-internet-gateway --query InternetGateway.InternetGatewayId --output text > igw-id.txt`
 * Set the IGW ID in your Bash Environment: `export IGW_ID=$(cat igw-id.txt)`
 * Attach the IGW to your VPC: `aws ec2 attach-internet-gateway --internet-gateway-id $IGW_ID --vpc-id $VPC_ID`
+* Create the Route Table for your VPC: `aws ec2 create-route-table --vpc-id $VPC_ID --query RouteTable.RouteTableId --output text > rt-id.txt`
+* Set the Route Table ID in your Bash Environment: `export RT_ID=$(cat rt-id.txt)`
+* Create a route in your VPC route table: `aws ec2 create-route --route-table-id $RT_ID --destination-cidr-block 0.0.0.0/0 --gateway-id $IGW_ID`
+* Associate your route table to the Subnet: `aws ec2 associate-route-table --route-table-id $RT_ID --subnet-id $SUBNET_ID`
 
 ### Creating the Security Group
 
@@ -43,12 +47,13 @@ A Security Group in AWS is what allows us to control traditional remote access v
 
 * Create the Security Group for your instance: `aws ec2 create-security-group --group-name my-sg --description "My security group" --vpc-id $VPC_ID --query GroupId --output text > sg-id.txt`
 * Set the SG_ID in your Bash Environment: `export SG_ID=$(cat sg-id.txt)`
+* Allow SSH to your EC2: `aws ec2 authorize-security-group-ingress --group-id $SG_ID --protocol tcp --port 22 --cidr 0.0.0.0/0`
 
 ### Creating the EC2 Instance
 Ubuntu AMI Locator: https://cloud-images.ubuntu.com/locator/ec2/
 
 This example uses Ubuntu 23.04 in us-east-1
 
-* Set the AMI ID in your Bash Environment: `export AMI_ID="ami-0d2fcfe4f5c4c5b56"`
+* Set the AMI ID in your Bash Environment: `export AMI_ID="ami-010e83f579f15bba0"`
 * Create a new EC2 Instance with User data: `aws ec2 run-instances --image-id $AMI_ID --count 1 --instance-type t2.micro --key-name KeyPairName --security-group-ids $SG_ID --subnet-id $SUBNET_ID --user-data file://bash.sh`
 
